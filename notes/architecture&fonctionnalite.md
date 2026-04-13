@@ -26,7 +26,7 @@
 | Gestion fichiers locaux    | expo-file-system                              | Sauvegarde URIs images                      | Standard Expo, fiable                          |
 | UUID / Crypto              | expo-crypto                                   | Génération identifiants uniques             | Sécurisé et rapide                             |
 | Persistance settings       | @react-native-async-storage/async-storage     | Theme, username, high_res_enabled           | Simple et asynchrone                           |
-| Permissions                | expo-camera + expo-media-library              | Accès caméra et galerie                     | Compatibilité Expo                             |
+| Permissions                | expo-image-picker                            | Accès caméra et galerie                     | Compatibilité Expo                             |
 
 ## Écrans principaux & Fonctionnalités par écran
 
@@ -41,7 +41,7 @@ Fonctionnalités :
 - Recherche texte rapide (filtre local)
 - Affichage miniature photo + nom + catégorie (badge coloré)
 - Bouton scan QR rapide (accès direct caméra)
-- Bouton “+ Ajouter item”
+- Bouton “+ Ajouter item” (accès direct dialogue d'ajout)
 - Tri (par nom, date, catégorie)
 - Indicateur “dernier scan” ou “non scanné récemment”
 
@@ -51,7 +51,7 @@ Librairies principales :
 - Context API (récupération items)
 - Image (React Native) pour miniatures
 
-### 3. Add / Edit Item Screen
+### 3. Add / Edit Item Screen (Dialogue d'ajout ou modification d'un item)
 Fonctionnalités :
 - Saisie nom de l’objet
 - Sélection catégorie (dropdown / picker)
@@ -64,7 +64,7 @@ Fonctionnalités :
 
 Librairies principales :
 - react-native-vision-camera (prise photo)
-- expo-media-library (accès galerie)
+- expo-image-picker (accès galerie)
 - react-native-image-resizer (miniature)
 - expo-file-system (stockage fichier local)
 - expo-crypto (UUID)
@@ -85,7 +85,7 @@ Librairies principales :
 - vision-camera-code-scanner (frame processor QR)
 - Haptics (React Native) pour feedback
 
-### 5. Item Detail Screen
+### 5. Item Detail Screen (onPress sur item de la liste – Pas dans la navigation)
 Fonctionnalités :
 - Affichage grande photo (zoomable si possible)
 - Nom, catégorie, date création, QR data
@@ -119,7 +119,6 @@ Fonctionnalités :
 - Informations app (version, crédits)
 
 Librairies principales :
-- Switch, TextInput (RN)
 - @react-native-async-storage/async-storage
 - useColorScheme (React Native)
 

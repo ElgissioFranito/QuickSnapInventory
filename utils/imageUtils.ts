@@ -1,5 +1,8 @@
-import ImageResizer from '@bam.tech/react-native-image-resizer';
-import * as FileSystem from 'expo-file-system';
+import { Directory, File, Paths } from 'expo-file-system';
+import ImageResizer from 'react-native-image-resizer';
+
+// Utilisation de Paths.document pour le répertoire de base
+const IMAGE_DIR = new Directory(Paths.document, 'images');
 
 export const createThumbnail = async (
   imageUri: string,
@@ -12,7 +15,9 @@ export const createThumbnail = async (
       width,
       height,
       'JPEG',
-      60
+      60,
+      0,
+      undefined // Utilise le cache par défaut
     );
     return resized.uri;
   } catch (error) {
@@ -24,21 +29,16 @@ export const createThumbnail = async (
 export const saveImage = async (sourceUri: string): Promise<string> => {
   try {
     const fileName = `img_${Date.now()}.jpg`;
-    const destinationUri = `${FileSystem.documentDirectory}images/${fileName}`;
+    const destinationFile = new File(IMAGE_DIR, fileName);
 
-    // Create images directory if it doesn't exist
-    const imageDir = `${FileSystem.documentDirectory}images`;
-    const dirInfo = await FileSystem.getInfoAsync(imageDir);
-    if (!dirInfo.exists) {
-      await FileSystem.makeDirectoryAsync(imageDir, { intermediates: true });
+    if (!IMAGE_DIR.exists) {
+      IMAGE_DIR.create(); 
     }
 
-    await FileSystem.copyAsync({
-      from: sourceUri,
-      to: destinationUri,
-    });
+    const sourceFile = new File(sourceUri);
+    sourceFile.copy(destinationFile);
 
-    return destinationUri;
+    return destinationFile.uri;
   } catch (error) {
     console.error('Error saving image:', error);
     throw error;
@@ -47,8 +47,10 @@ export const saveImage = async (sourceUri: string): Promise<string> => {
 
 export const deleteImage = async (imageUri: string): Promise<void> => {
   try {
-    if (imageUri.startsWith(FileSystem.documentDirectory || '')) {
-      await FileSystem.deleteAsync(imageUri);
+    const fileToDelete = new File(imageUri);
+    
+    if (fileToDelete.exists && imageUri.startsWith(IMAGE_DIR.uri)) {
+      fileToDelete.delete();
     }
   } catch (error) {
     console.error('Error deleting image:', error);

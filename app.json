@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "QuickSnapInventory",
+    "name": "Hehe Inventaire",
     "slug": "QuickSnapInventory",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -41,7 +41,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      ["expo-dev-client"]
     ],
     "experiments": {
       "typedRoutes": true,
